@@ -18,14 +18,14 @@ def usage():
     print "help info:"
     print "\tpress_res_mgr.py -h"
 
-zkAddress = "zk1.onlinesmoke.et2:2181"
+zkAddress = "127.0.0.1:2181"
 zk = KazooClient(hosts=zkAddress)
 zk.start()
 hostPath = "/press_res/hosts"
 jobPath = "/press_res/jobs"
 lockPath = "/press_res/lock"
-createAgentUrl = "/press_agent?token=afdu288h9j0l.xho2jh&cmd=create&jobId="
-deleteAgentUrl = "/press_agent?token=afdu288h9j0l.xho2jh&cmd=delete&jobId="
+createAgentUrl = "/press_agent?token=aaa123456&cmd=create&jobId="
+deleteAgentUrl = "/press_agent?token=aaa123456&cmd=delete&jobId="
 
 def addHost(hostList):
     ret = 0

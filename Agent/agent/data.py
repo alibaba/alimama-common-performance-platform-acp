@@ -207,7 +207,7 @@ class DailyData(Data):
                 fields = line.split()
                 type = fields[0][0]
                 if len(fields) < 8:
-                    CONF.log.error("EROOR WIHT HADOOP!!!")
+                    CONF.log.error("hadoop return error")
                     continue
                 path = fields[7]
                 index = path.rfind("/")
@@ -276,8 +276,9 @@ class DailyData(Data):
                     dataId = int(path.split("-")[1])
                     CONF.log.error("current name_data: %s      path: %s     name: %s   id: %s" %(name_date,path,name,path.split("-")[1]))
                     CONF.log.error("current PART_LIST:: %s" % str(len(part_list)))
-                    checkList = [10,20,21,68,72]
-                    if dataId in checkList and len(part_list) !=15:
+                    checkList = [1,2,3,4,5]  # define your own checkList
+                    part_num = 15
+                    if dataId in checkList and len(part_list) !=part_num:
                         CONF.log.error("强校验数据part数未达到预期数目: %s" %(str(len(part_list)))) 
                         continue
                     else:

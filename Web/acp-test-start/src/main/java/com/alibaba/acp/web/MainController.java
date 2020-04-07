@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.JsonViewResponseBod
 
 @Controller
 public class MainController {
-    private static final String token = "xilj438jg09hl1-340";
+    private static final String token = "123abc";
 
     @RequestMapping("/")
     public String root() {
@@ -155,7 +155,7 @@ System.out.println("776666"+fRetArr.toJSONString());
         String option_str = request.getParameter("option_str");
         String source = "running";
         String create_task = String.format
-                ("http://127.0.0.1:8001/create?qps=%s&target=%s&query_path=%s&query_type=http&token=xilj438jg09hl1-340&option=111&source=acp_111id",qps,target,query_path);
+                ("http://127.0.0.1:8001/create?qps=%s&target=%s&query_path=%s&query_type=http&token=123abc&option=111&source=acp_111id",qps,target,query_path);
         String task_ret = commonUtil.sendGet(create_task);
         JSONObject resObj = JSONObject.parseObject(task_ret);
         JSONObject task = JSONObject.parseObject(resObj.get("res").toString());
@@ -193,7 +193,7 @@ System.out.println("776666"+fRetArr.toJSONString());
        /* String task_id = request.getParameter("task_id");
         String rid = request.getParameter("id");
         String stop_task = String.format
-                ("http://127.0.0.1:8001/stop?taskid=%s&timestamp=111&token=xilj438jg09hl1-340",task_id);
+                ("http://127.0.0.1:8001/stop?taskid=%s&timestamp=111&token=123abc",task_id);
         String task_ret = commonUtil.sendGet(stop_task);
         String url = String.format
                 ("http://127.0.0.1:12345/stoptask?rid=%s",rid);

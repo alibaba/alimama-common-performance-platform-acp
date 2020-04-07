@@ -166,7 +166,7 @@ def start_manager(pid_file):
     file.write(str(pid))
     file.close()
     multiprocessing.Process(target=work, args=()).start()
-    #multiprocessing.Process(target=data, args=()).start()
+    #multiprocessing.Process(target=data, args=()).start()   #recomment data forks if not necessary
     std_file = open(CONF.log_file, "w+")
     sys.stdout = std_file
     sys.stderr = std_file

@@ -42,22 +42,23 @@ class Host:
         spe_host_list = []
 
         option =  task.get_task_info()["option"]
-        jsobObj1 = json.loads(task.get_task_info()["option"])
+        #jsobObj1 = json.loads(task.get_task_info()["option"])
         firstCluster = "3"
         #firstCluster = str(jsobObj1['cluster'])
-
+        # set your own id and filter
         for host_node in list_node.list_children():
             host = Host(host_node.get_name())
-            if firstCluster == '3':     
-                host.get_info_from_zk()
-                spe_host_list.append(host)
+            if firstCluster == '6':     
+                if host.checkSpecialNode("spe") and host.checkSpecialNode("6"): 
+                    host.get_info_from_zk()
+                    spe_host_list.append(host)
             elif firstCluster == '2':   
                 if host.checkSpecialNode("spe") and host.checkSpecialNode("2"): 
                     host.get_info_from_zk()
                     spe_host_list.append(host)
             else:
                 if host.checkSpecialNode("spe"):
-                    if host.checkSpecialNode("3"):
+                    if host.checkSpecialNode("6"):
                         continue
                     if host.checkSpecialNode("2"):
                         continue
@@ -66,10 +67,6 @@ class Host:
                         spe_host_list.append(host)
 
         return spe_host_list
-
-
-
-
 
 
 
@@ -109,7 +106,7 @@ class Host:
                     # 超过60%的host上存在query, 则认为该query可用
                     yes_num = dict[key][query_key]["yes"]
                     no_num = dict[key][query_key]["no"]
-                    if float(yes_num)/(yes_num + no_num) >= 0.5:
+                    if float(yes_num)/(yes_num + no_num) >= 0.6:
                         if not query_set.has_key(key):
                             query_set[key] = []
                         query_set[key].append(query_key)
@@ -188,7 +185,7 @@ class Host:
                     available_list.append(host)
                     available_num += host.available/resource
         if available_num < agent_num:
-            CONF.log.error("qq: %s resource not enough: available %d, need %d" % (query_type,available_num, agent_num))
+            CONF.log.error("err: %s resource not enough: available %d, need %d" % (query_type,available_num, agent_num))
             return False
         available_list.sort(key=lambda host:int(host.available), reverse=True)
         allocate_num = 0

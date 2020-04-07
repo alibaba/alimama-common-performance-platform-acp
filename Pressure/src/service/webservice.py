@@ -37,7 +37,7 @@ def checkToken(func):
     return _func
     
 class Api:
-    key = 'xilj438jg09hl1-340';
+    key = '123abc';   #define your key here
     res = {'code':'true','res':'','desc':''}
 
     def GET(self, name=None):
