@@ -1,0 +1,32 @@
+$def with (content)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='content-type' content='text/html;charset=utf-8'/>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+
+    <title>
+    $if content.title:
+        $content.title
+    </title>
+    <link rel="stylesheet" href="/static/bootstrap/3.3.7/css/bootstrap.min.css" charset="utf-8"/>
+    <link rel="stylesheet" href="/static/css/datatables.min.css" charset="utf-8"/>
+    <link rel="stylesheet" href="/static/css/jquery-ui.min.css" charset="utf-8"/>
+    <script src="/static/js/jquery.js" charset="utf-8"></script>
+    <script src="/static/js/datatables.min.js" charset="utf-8"></script>
+    <script src="/static/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--script src="https://cdn.bootcss.com/vue/1.0.28/vue.common.min.js" charset="utf-8"></script-->
+    <script src="https://cdn.bootcss.com/vue/1.0.28/vue.min.js" charset="utf-8"></script>
+    <script src="/static/js/vue-resource.min.js" charset="utf-8"></script>
+    <script src="/static/js/jquery-ui.min.js" charset="utf-8"></script>
+</head>
+<body>
+<br>
+$:content
+$if content.jsfiles:
+    $for f in content.jsfiles.split():
+        <script src="$f"></script>
+</body>
+</html>

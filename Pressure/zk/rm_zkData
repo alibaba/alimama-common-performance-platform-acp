@@ -1,0 +1,1 @@
+* * * * * root /usr/bin/java -cp /opt/zookeeper/zookeeper-3.3.5.jar:/opt/zookeeper/lib/log4j-1.2.15.jar:/opt/zookeeper/conf org.apache.zookeeper.server.PurgeTxnLog /home/ads/zookeeper/dataLog /home/ads/zk_data -n 10 >/dev/null 2>&1

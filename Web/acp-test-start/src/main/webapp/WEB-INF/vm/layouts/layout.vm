@@ -1,0 +1,55 @@
+<html>
+<head>
+  <meta charset="utf-8">
+<link rel="stylesheet" href="static/static/js/layui-v2.3.0/layui/css/layui.css"  media="all">
+<script src="static/static/js/layui-v2.3.0/layui/layui.js" charset="utf-8"></script>
+<style>
+.layui-nav-tree .layui-nav-item a{
+height:60px;
+}
+</style>
+</head>
+    <body>
+
+<div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a height="100" class="" href="javascript:;"><img src="static/acp-logo-2.png" height="60" width="60"/><span style="font-size:30px;">Acp</span></a>
+          <dl class="layui-nav-child">
+            <dd><a href="/acp">主页</a></dd>
+            <dd><a href="/createtask.htm">创建压测任务</a></dd>
+            <dd><a href="/tasklist.htm">任务列表</a></dd>
+            <dd><a href="/taskmonitor.htm">实时监控</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="/pressquery.htm">压测query</a>
+        </li>
+        <li class="layui-nav-item"><a href="/pressdetail3.htm">压测配置</a></li>
+        <li class="layui-nav-item"><a href="/test3.htm">监控配置</a></li>
+      </ul>
+    </div>
+  </div>
+
+        <div     style="padding-left: 200px;">
+<ul class="layui-nav" lay-filter="">
+  <li class="layui-nav-item"><a href="">业务线1</a></li>
+  <li class="layui-nav-item layui-this"><a href="">业务线2</a></li>
+  <li class="layui-nav-item"><a href="">业务线3</a></li>
+  <li class="layui-nav-item">
+    <a href="javascript:;">文档</a>
+  </li>
+  <li class="layui-nav-item"><a href="">showcase</a></li>
+</ul>
+</div>
+
+
+
+        <div     style="padding-left: 200px;">
+            <!-- View index.vm is inserted here -->
+            $!screen_content
+        </div>
+    </body>
+</html>

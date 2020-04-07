@@ -1,0 +1,166 @@
+$var title: 发压系统Debug页面
+$var jsfiles: static/js/debug.js
+<div id="debugDiv">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">任务详情</div>
+                <div class="panel-body">
+                    <template v-if="taskList.length==0">
+                        <h4>暂无压测任务</h4>
+                    </template>
+                    <template v-else>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>状态</th>
+                                    <th>目标</th>
+                                    <th>QPS</th>
+                                    <th>来源</th>
+                                    <th>类型</th>
+                                    <th>Query</th>
+                                    <th>option</th>
+                                    <th>agent列表</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template v-for="task in taskList">
+                                    <tr>
+                                        <td v-text="task.task_id"></td>
+                                        <td>
+                                            <span class="label label-success" v-if="task.status=='running'" v-text="task.status"></span>
+                                            <span class="label label-default" v-else v-text="task.status"></span>
+                                        </td>
+                                        <td v-text="task.target"></td>
+                                        <td v-text="task.qps"></td>
+                                        <td v-text="task.source"></td>
+                                        <td v-text="task.query_type"></td>
+                                        <td><span class="label label-default" :title="task.query_path" v-text="shortPath(task.query_path)"></span></td>
+                                        <template v-if="task.option.length<=20">
+                                            <td v-text="task.option"></td>
+                                        </template>
+                                        <template v-else>
+                                            <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#optionModal" @click="setOption(task.option)">查看</button></td>
+                                        </template>
+                                        <td>
+                                            <template v-if="task.agentList.length==0">
+                                                <span class="label label-default">暂未分配</span>
+                                            </template>
+                                            <template v-else>
+                                                <table class="table table-condensed">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>发压机器</th>
+                                                            <th>心跳</th>
+                                                            <th>当前qps</th>
+                                                            <th>最大qps</th>
+                                                            <th>占资源数</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <template v-for="taskAgent in task.agentList">
+                                                            <tr>
+                                                                <td v-text="taskAgent.agent_id"></td>
+                                                                <td v-text="taskAgent.host"></td>
+                                                                <td>
+                                                                    <span class="label label-success" v-if="taskAgent.heartbeat" v-text="taskAgent.heartbeat"></span>
+                                                                    <span class="label label-danger" v-else v-text="taskAgent.heartbeat"></span>
+                                                                </td>
+                                                                <td v-text="taskAgent.qps"></td>
+                                                                <td v-text="taskAgent.max_qps"></td>
+                                                                <td v-text="taskAgent.resource_num"></td>
+                                                            </tr>
+                                                        </template>
+                                                    </tbody>
+                                                </table>
+                                            </template>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">资源详情</div>
+                <div class="panel-body">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>IP</th>
+                                <th>状态</th>
+                                <th>可用资源数</th>
+                                <th>总资源数</th>
+                                <th>数据ID</th>
+                                <th>agent列表</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template v-for="host in hostList">
+                                <tr>
+                                    <td v-text="host.ip"></td>
+                                    <td>
+                                        <span class="label label-success" v-if="host.status=='idle'" v-text="host.status"></span>
+                                        <span class="label label-warning" v-else v-text="host.status"></span>
+                                    </td>
+                                    <td v-text="host.available"></td>
+                                    <td v-text="host.total"></td>
+                                    <td v-text="host.id"></td>
+                                    <td>
+                                        <template v-if="host.agentList.length==0">
+                                            <span class="label label-default">空闲</span>
+                                        </template>
+                                        <template v-else>
+                                            <table class="table table-condensed">
+                                                <thead>
+                                                    <tr>
+                                                        <th>任务ID</th>
+                                                        <th>agent ID</th>
+                                                        <th>压测类型</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <template v-for="hostAgent in host.agentList">
+                                                        <tr>
+                                                            <td v-text="hostAgent.task_id"></td>
+                                                            <td v-text="hostAgent.agent_id"></td>
+                                                            <td v-text="hostAgent.query_type"></td>
+                                                        </tr>
+                                                    </template>
+                                                </tbody>
+                                            </table>
+                                        </template>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="optionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">option</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <textarea class="form-control" :value="option" rows="10" readonly></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

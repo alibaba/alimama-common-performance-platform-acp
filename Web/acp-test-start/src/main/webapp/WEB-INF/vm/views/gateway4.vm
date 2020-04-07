@@ -1,0 +1,97 @@
+##NoLayout()
+<head>
+  <meta charset="utf-8">
+<link rel="stylesheet" href="static/static/js/layui-v2.3.0/layui/css/layui.css"  media="all">
+<script src="static/static/js/layui-v2.3.0/layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+
+<div >
+
+
+
+<div> 
+<table class="layui-hide" id="test" lay-filter="test"></table>
+ </div>
+</div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">全选</button>
+<!--    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>-->
+  </div>
+</script>
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-xs" lay-event="edit">查看</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="stop">停止</a>
+  <a class="layui-btn layui-btn layui-btn-xs" lay-event="detail">编辑</a>
+</script>
+              
+          
+ 
+<script>
+layui.use('table', function(){
+  var table = layui.table;
+  
+  table.render({
+    elem: '#test'
+    ,url:'api/getalltask.htm'
+    ,toolbar: '#toolbarDemo'
+    ,title: '用户数据表'
+    ,totalRow: true
+    ,cols: [[
+      {type: 'checkbox', fixed: 'left'}
+      ,{field:'id', title:'任务ID', width:40, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
+      ,{field:'timestamp', title:'触发时间', width:260, edit: 'text'}
+      ,{field:'protocol', title:'压测协议', width:60, edit: 'text', templet: function(res){
+        return '<em>http</em>'
+      }}
+      ,{field:'query', title:'回放数据', width:260, sort: true, totalRow: true}
+      ,{field:'taskid', title:'集群任务id', width:140, edit: 'text', sort: true}
+      ,{field:'owner', title:'负责人', width:100, sort: true, totalRow: true}
+      ,{field:'target', title:'压测目标',width:120}
+      ,{field:'source', title:'状态', width:100}
+      ,{field:'option_str', title:'压测原因', width:100}
+      ,{field:'qps', title:'qps', width:60}
+      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+    ]]
+    ,page: true
+  });
+ 
+  table.on('tool(test)', function(obj){
+    var data = obj.data;
+    if(obj.event === 'detail'){
+      layer.msg('ID：'+ data.id + ' 的查看操作');
+      window.location.href= '/acp/pressdetail.htm?id='+data.id;
+    } else if(obj.event === 'stop'){
+      layer.confirm('确认停止?', function(index){
+        layer.alert("id:"+data.id+"   taskid:"+data.taskid);
+        window.location.href='/acp/api/stoptask.htm?id='+data.id+'&task_id='+data.taskid;
+      });
+    } else if(obj.event === 'edit'){
+      layer.alert('压测配置json:<br>'+ JSON.stringify(data))
+    }
+  });  
+ 
+  //工具栏事件
+/*  table.on('toolbar(test)', function(obj){
+    var checkStatus = table.checkStatus(obj.config.id);
+    switch(obj.event){
+      case 'getCheckData':
+        var data = checkStatus.data;
+        layer.alert(JSON.stringify(data));
+      break;
+      case 'getCheckLength':
+        var data = checkStatus.data;
+        layer.msg('选中了：'+ data.length + ' 个');
+      break;
+      case 'isAll':
+        layer.msg(checkStatus.isAll ? '全选': '未全选')
+      break;
+    };
+  });
+  */
+});
+</script>
+
+</body>

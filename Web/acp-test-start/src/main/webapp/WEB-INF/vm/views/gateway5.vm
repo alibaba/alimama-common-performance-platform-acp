@@ -1,0 +1,237 @@
+##NoLayout()
+  <style>
+  .select2
+  {
+  color:red;
+  }
+  .select2-container 
+  {
+  color:red;
+  display:none;
+  }
+  .layui-input-block
+  {
+  margin-left:200px;
+  }
+  </style>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<link rel="stylesheet" href="static/js/layui-v2.3.0/layui/css/layui.css"  media="all">
+<script src="static/js/layui-v2.3.0/layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+          
+<blockquote class="layui-elem-quote layui-text">
+  创建性能测试任务 
+</blockquote>
+ 
+  
+ 
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  <legend>创建压测任务</legend>
+</fieldset>
+<form class="layui-form layui-form-pane" action="" lay-filter="example">
+$csrfToken.hiddenField
+  <div class="layui-form-item">
+    <label class="layui-form-label" style="width:200px;">任务名称</label>
+    <div class="layui-input-block" style="margin-left:200px;">
+      <input type="text" name="option_str" autocomplete="off" placeholder="输入任务名称" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label" style="width:200px;">压测目标</label>
+    <div class="layui-input-inline">
+      <input type="text" name="target" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label" style="width:200px;">过期时间</label>
+      <div class="layui-input-block" style="margin-left:200px;">
+        <input type="text" name="expire_time" id="date1" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label" style="width:200px;">QPS</label>
+      <div class="layui-input-inline">
+        <input type="text" name="qps" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label" style="width:200px;">系统指标轮训时间</label>
+    <div class="layui-input-inline" style="">
+      <input type="text" name="loop_time" placeholder="选填" autocomplete="off" class="layui-input">
+    </div>
+    <div class="layui-form-mid layui-word-aux">单位为秒,最小30秒</div>
+  </div>
+  
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label" style="">压测范围</label>
+      <div class="layui-input-inline" style="width: 100px;">
+        <input type="text" name="min_qps" placeholder="FROM" autocomplete="off" class="layui-input">
+      </div>
+      <div class="layui-form-mid">~</div>
+      <div class="layui-input-inline" style="width: 100px;">
+        <input type="text" name="max_qps" placeholder="TO" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label" style="">回放请求文件</label>
+    <div class="layui-input-block">
+      <select name="query_type" id="query_type" lay-filter="aihao">
+        <option value=""></option>
+        <option value="test_query_1">回放请求文件1</option>
+        <option value="ttt" selected="">回放请求文件模版</option>
+        <option value="test_query_3">回放请求文件2</option>
+        <option value="test_query_4">回放请求文件3</option>
+        <option value="test_query_5">其他</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label" style="width:200px;">自动终止条件</label>
+    <div class="layui-input-inline">
+      <select name="quiz1">
+        <option value="">rt阈值</option>
+        <option value="1">RT>500ms</option>
+        <option value="2">RT>200ms</option>
+        <option value="3">RT>100ms</option>
+      </select>
+    </div>
+    <div class="layui-input-inline">
+      <select name="quiz2">
+        <option value="">超时率阈值</option>
+        <option value="11">timeout>1%</option>
+        <option value="12">timeout>2%</option>
+        <option value="13">timeout>5%</option>
+        <option value="14">timeout>10%</option>
+        <option value="15">其他</option>
+      </select>
+    </div>
+    <div class="layui-input-inline">
+      <select name="quiz3">
+        <option value="">子模块阈值</option>
+        <option value="21">模块1 cpu>80%</option>
+        <option value="22">模块2 cpu>80%</option>
+        <option value="23">模块3 cpu>80%</option>
+      </select>
+    </div>
+  </div>
+
+
+<!--  <div class="layui-form-item">
+    <label class="layui-form-label" style="width:200px;">自定义强制停止条件</label>
+    <div class="layui-input-inline">
+      <input type="text" name="total" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+    </div>
+  </div> -->
+
+
+  <div class="layui-form-item" pane="">
+    <label class="layui-form-label" style="width:200px;">模型自动压测</label>
+    <div class="layui-input-block" style="margin-left:200px;">
+      <input type="checkbox" checked="" name="is_auto" lay-skin="switch" lay-filter="switchTest" title="开关">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label" style="width:200px;">压测协议类型</label>
+    <div class="layui-input-block" style="margin-left:200px;">
+      <input type="text" name="protocol" autocomplete="off" placeholder="输入模型名称" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label" style="">配置参数</label>
+    <div class="layui-input-block">
+      <textarea placeholder="请输入内容" class="layui-textarea" name="option_str1"></textarea>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <button class="layui-btn" lay-submit="" lay-filter="demo2">跳转式提交</button>
+  </div>
+</form>
+          
+<script>
+layui.use(['form', 'layedit', 'laydate'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+  
+  //日期
+  laydate.render({
+    elem: '#date'
+  });
+  laydate.render({
+    elem: '#date1'
+  });
+  
+  //创建一个编辑器
+  var editIndex = layedit.build('LAY_demo_editor');
+ 
+  //自定义验证规则
+  form.verify({
+    title: function(value){
+      if(value.length < 5){
+        return '标题至少得5个字符啊';
+      }
+    }
+    ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+    ,content: function(value){
+      layedit.sync(editIndex);
+    }
+  });
+  
+  //监听指定开关
+  form.on('switch(switchTest)', function(data){
+    layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+      offset: '6px'
+    });
+    layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+  });
+  
+  //监听提交
+  form.on('submit(demo2)', function(data){
+   var qType = $("#query_type").val();
+  //console.log(qType);
+   var url = "/api/createtask?qps="+data.field.qps+"&target="+data.field.target+"&query_path="+qType+"&query_type="+data.field.protocol+"&option_str="+data.field.option_str;
+   //var URL1 = url+encodeURIComponent(PARAM);
+  console.log(url);
+
+    jQuery.ajax({
+         type : "get",
+         url : url,
+         async : false,
+         success : function(data){
+console.log(data);
+          }
+     }); 
+event.preventDefault();
+
+    layer.alert("创建成功", {
+      title: '提交状态'
+    })
+    return false;  
+  }); 
+ 
+event.preventDefault();
+  //表单初始赋值
+  form.val('example', {
+    "max_qps": "60000"
+    ,"min_qps": "10000"
+    ,"task_name": "输入任务名称"
+    ,"target": "127.0.0.1:80" 
+    ,"protocol": "http" //复选框选中状态
+    ,"is_auto": true //开关状态
+    ,"qps": "300"
+    ,"loop_time": "30"
+  })
+  
+  
+});
+</script>
+

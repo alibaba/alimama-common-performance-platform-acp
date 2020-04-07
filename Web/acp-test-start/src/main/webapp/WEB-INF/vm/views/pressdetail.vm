@@ -1,0 +1,93 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<TITLE>实时性能数据</TITLE>
+<script src="static/jquery.js"></script>
+<script src="static/echarts.min.js" charset="utf-8"></script>
+<body>
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="main" style="width: 1200px;height:600px;"></div>
+</body>
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+function randomData() {
+    now = new Date(+now + oneDay);
+    value = value + Math.random() * 21 - 10;
+    return {
+        name: now.toString(),
+        value: [
+            [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
+            Math.round(value)
+        ]
+    }
+}
+
+var data = [];
+var now = +new Date(2018, 9, 4);
+var oneDay = 24 * 3600*1000;
+var value = Math.random() * 1000;
+for (var i = 0; i < 1000; i++) {
+    data.push(randomData());
+}
+
+option = {
+    title: {
+        text: 'monitor'
+    },
+    tooltip: {
+        trigger: 'axis',
+        formatter: function (params) {
+            params = params[0];
+            var date = new Date(params.name);
+            return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
+        },
+        axisPointer: {
+            animation: false
+        }
+    },
+    xAxis: {
+        type: 'time',
+        splitLine: {
+            show: false
+        }
+    },
+    yAxis: {
+        type: 'value',
+        boundaryGap: [0, '100%'],
+        splitLine: {
+            show: false
+        }
+    },
+    series: [{
+        name: '模拟数据',
+        type: 'line',
+        showSymbol: false,
+        hoverAnimation: false,
+        data: data
+    }]
+};
+
+setInterval(function () {
+
+ jQuery.ajax({
+         type : "get",
+         url : "api/getLatestQuota.htm",
+         async : false,
+         success : function(data){
+console.log(data);
+          }
+     });
+
+// by api interface ,you can add your data to below
+    for (var i = 0; i < 5; i++) {
+        data.shift();
+        data.push(randomData());
+    }
+myChart.setOption(option);
+    myChart.setOption({
+        series: [{
+            data: data
+        }]
+    });
+}, 1000);
+    </script>

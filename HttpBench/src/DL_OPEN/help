@@ -1,0 +1,2 @@
+sudo g++ -fPIC -shared pbdecoder.cpp -o libdecoder.so
+sudo g++ -rdynamic -o main main.cpp -ldl -L ./ -ldecoder

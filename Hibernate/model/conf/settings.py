@@ -1,0 +1,8 @@
+USE_DATABASE=1
+
+MYSQL_HOST="127.0.0.1"
+MYSQL_PORT=3306
+DB_NAME="acp_opensource"
+DB_USER="root"
+DB_PASS="123456"
+

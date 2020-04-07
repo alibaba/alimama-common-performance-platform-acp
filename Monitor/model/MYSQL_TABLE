@@ -1,0 +1,18 @@
+mysql> desc acp_task;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+| timestamp  | varchar(128) | YES  |     | NULL    |                |
+| taskid     | varchar(128) | YES  |     | NULL    |                |
+| acpid      | varchar(128) | YES  |     | NULL    |                |
+| target     | varchar(128) | YES  |     | NULL    |                |
+| query      | varchar(128) | YES  |     | NULL    |                |
+| qps        | varchar(128) | YES  |     | NULL    |                |
+| protocol   | varchar(128) | YES  |     | NULL    |                |
+| source     | varchar(128) | YES  |     | NULL    |                |
+| option_str | varchar(128) | YES  |     | NULL    |                |
+| owner      | varchar(128) | YES  |     | NULL    |                |
+| json_conf  | mediumtext   | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+12 rows in set (0.00 sec)

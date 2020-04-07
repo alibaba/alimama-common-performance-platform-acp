@@ -1,0 +1,3 @@
+#
+*/5 * * * * ads cd /home/a/acp-agent/agent && ../python2.7.6/bin/python check_agent_proc.py
+#

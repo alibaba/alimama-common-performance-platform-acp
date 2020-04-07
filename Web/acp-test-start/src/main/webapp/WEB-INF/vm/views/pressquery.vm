@@ -1,0 +1,73 @@
+##NoLayout()
+  <style>
+  .select2
+  {
+  color:red;
+  }
+  .select2-container 
+  {
+  color:red;
+  display:none;
+  }
+  .layui-input-block
+  {
+  margin-left:200px;
+  }
+  </style>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<link rel="stylesheet" href="static/layui-2.5.4/layui-v2.5.4/layui/css/layui.css"  media="all">
+<script src="static/layui-2.5.4/layui-v2.5.4/layui/layui.js" charset="utf-8"></script>
+</head>
+<div id="test12" class="demo-tree-more"></div>
+
+<script>
+layui.use(['tree', 'util'], function(){
+  var tree = layui.tree
+  ,layer = layui.layer
+  ,util = layui.util
+  
+ var datav; 
+jQuery.ajax({
+         type : "get",
+         url : "api/getQueryList.htm",
+         async : false,
+         success : function(data){
+datav = JSON.parse(data);
+          }
+     }); 
+
+
+console.log(typeof(datav));
+  tree.render({
+    elem: '#test12'
+    ,data: datav
+    ,showCheckbox: true  
+    ,id: 'demoId1'
+    ,isJump: true //是否允许点击节点时弹出新窗口跳转
+    ,click: function(obj){
+      var data = obj.data;  //获取当前点击的节点数据
+      layer.msg('状态：'+ obj.state + '<br>节点数据：' + JSON.stringify(data));
+    }
+  });
+  
+  //按钮事件
+  util.event('lay-demo', {
+    getChecked: function(othis){
+      var checkedData = tree.getChecked('demoId1'); //获取选中节点的数据
+      
+      layer.alert(JSON.stringify(checkedData), {shade:0});
+      console.log(checkedData);
+    }
+    ,setChecked: function(){
+      tree.setChecked('demoId1', [12, 16]); //勾选指定节点
+    }
+    ,reload: function(){
+      //重载实例
+      tree.reload('demoId1', {
+        
+      });
+      
+    }
+  });
+});
+</script> 
