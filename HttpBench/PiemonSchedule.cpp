@@ -70,7 +70,7 @@ void* PiemonSchedule::counting_loop_thread(void * args){
              output_head = output_head->next;
              pthread_mutex_unlock(&output_mutex);
              sleep(2);
-             }
+         }
      }
 }
 int PiemonSchedule::insert_record(const int qps,const int thread){

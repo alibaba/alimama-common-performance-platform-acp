@@ -143,7 +143,7 @@ class WebService:
                 return ret_info1
             ret_info = urllib2.quote(ret_info1.encode('utf-8'))
             err_info = urllib2.quote(err_info1.encode('utf-8'))
-            if name == 'getCurrentStatus' or name == 'getlist' or name == 'getdetail' or name == 'swift' or name == 'gamma' or name=='gammadiff' or name == 'gammadiff2' or name == 'gammatasklist' or name == 'gammatasklist2' or name == 'gammadifftwins' or name == 'gammatasklist3' or name == 'writezkforadf' or name == 'readzkforadf' or name == 'runErpc':
+            if name =='test':
                 return ret_info1
             else:
                 jsonStr = '{"qps":200}'
