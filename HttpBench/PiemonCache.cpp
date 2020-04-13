@@ -102,37 +102,6 @@ void PiemonCache::init() {
         _responseTime[v]=0;
         }
 }
-/*
-void PiemonCache::match(PiemonPerfCollector &result, uint32_t index, const char *queryStr) {
-    _mtx.lock();
-    MatchDataMap::iterator it = _matchDataMap.find(index);
-    if (it == _matchDataMap.end()) {
-        _matchDataMap[index] = result;
-    } else if (result != it->second) {
-        _matchFailed++;
-//	fprintf(fppp, "Match Failed: query-index: %d, query-string: %s \n"
-//		   "Last Query: bytesCount %d  docsCount %d  docsFound %d  docsReturn %d \n"
-//		   "Curr Query: bytesCount %d  docsCount %d  docsFound %d  docsReturn %d \n", 
-//		   index, queryStr,
-//		   it->second._bytesCount, it->second._docsCount, it->second._docsFound, it->second._docsReturn,
-//		   result._bytesCount, result._docsCount, result._docsFound, result._docsReturn);
-        _matchDataMap[index] = result;
-    }
-
-    if (result._docsReturn <= 0) {
-        _noDocsReturn ++;
-    } else {
-        _totalDocsReturn += result._docsReturn;
-    }
-    if (result._docsFound <= 0) {
-        _noDocsFound ++;
-    } else {
-        _totalDocsFound += result._docsFound;
-    }
-    _totalBytesReturn += result._bytesCount;
-    _mtx.unlock();
-}
-*/
 void PiemonCache::recordBytesReturn(int64_t bytesReturn) {
     _mtx.lock();
     _totalBytesReturn += bytesReturn;
@@ -180,7 +149,7 @@ float PiemonCache::getProcessTime(){
     _responseTimeMtx.lock();
     float retV = (float)_totalResponseTime;
     _responseTimeMtx.unlock();
-return retV;
+    return retV;
 
 }
 
@@ -214,7 +183,7 @@ void PiemonCache::showResult() {
     printf("Query Failed Number:           %d\n", atomic_read(&_queryFailed));
     printf("Query Timeout Number:          %d\n", atomic_read(&_queryTimeout));
 
-    if (_limits < 0 && _packetType == HTTP_PACKET) {
+    if (0 && _limits < 0 && _packetType == HTTP_PACKET) {   // never used
         printf("Match Failed Number:           %d\n", _matchFailed);
 
         printf("No DocsReturn Number:          %ld (%.2f%%)\n", _noDocsReturn, 

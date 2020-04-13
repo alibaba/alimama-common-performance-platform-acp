@@ -4,8 +4,9 @@
 
 二.编译及依赖:
 ===
-* 1.依赖:gcc > 4.1.2
-* 2.依赖:libpthread.so, libcurl.so libdl.so
+* 1.依赖:gcc >= 4.1.2
+* 2.curl-devel >= 7.29.0
+* 3.glibc-devel >= 2.17
 
 三.实现功能
 ===

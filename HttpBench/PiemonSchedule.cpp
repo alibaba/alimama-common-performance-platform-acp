@@ -116,27 +116,18 @@ void PiemonSchedule::run() {
         runParallel(pool);
         //runRate();
     } else {
-        cerr<<"Wrong parameter, you must specify -p or -f!"<<endl;
+        cerr<<"Wrong parameter, check your parameter"<<endl;
     }
     struct timeval oldtime; 
     gettimeofday(&oldtime, NULL);
     int oldqps = 0;
     int currentqps = 0;
-    int fflag = 0;
-    int testflag=0;
-    int gcounter = 0;
-    int only_flag= 0;
-    int first_flag = 0;
-    int fff_flag = 0;
+    int preheat_flag = 0;
     int parallel = 0;
-    int timess = 1;
     int total_thread_num =1;
     int maxqps =0;
-    int last_qps = 0;
-    int sss = 0;
-    int paramm =0;
-    int* press_map = new int[5];
-    memset(press_map,0,5*sizeof(int));
+    int querys_3s =  0;
+    int threads_3s =0;
     if(_globalInfo->_is_async_ == 1){
         while(!_stop){
             struct timeval exeTime;
@@ -161,71 +152,34 @@ void PiemonSchedule::run() {
         while (!_stop) {
             struct timeval exeTime;
             gettimeofday(&exeTime, NULL);
-            if(first_flag ==0 && exeTime.tv_sec-oldtime.tv_sec<3){
+            if(preheat_flag ==0 && exeTime.tv_sec-oldtime.tv_sec<3){
                 continue;
-            }    // preheat for 3 seconds 
-            else if(first_flag ==0){
-                first_flag = 1;
-                sss = atomic_read(&_globalInfo->_successQuery);
-                paramm = calParallelByRate(_globalInfo->_rate,sss);
-                for(int x=0;x<paramm;x++){
+            }    // preheat for 3 seconds and add threads 
+            else if(preheat_flag ==0){
+                preheat_flag = 1;
+                querys_3s = atomic_read(&_globalInfo->_successQuery);
+				oldqps = querys_3s;
+                threads_3s = calParallelByRate(_globalInfo->_rate,querys_3s);
+                for(int x=0;x<threads_3s;x++){
                     TurboSomeWorkers(total_thread_num,1);
                 }
                 gettimeofday(&oldtime, NULL);
                 continue;
-            } // start 80% threads
+            } // add more threads if necessary 
             else{
                 int s = atomic_read(&_globalInfo->_successQuery);
                 if(exeTime.tv_sec-oldtime.tv_sec == 2){
                     int micro_sec = exeTime.tv_usec-oldtime.tv_usec; 
                     float during_time = 2+(float((int(micro_sec*100/1000000))/100)); 
-                    int reload_qps = s-last_qps;
-                    last_qps = s;
-                    if(only_flag == 0){
-                        int qqq = (s-sss)/2;
-                        parallel = qqq/(_globalInfo->_parallelNum+paramm);
-                        if(parallel == 0)
-                            parallel=1;
-                        int total_parallel = _globalInfo->_rate/parallel-_globalInfo->_parallelNum-paramm;
-                        if(total_parallel<3){
-                            press_map[0] = 1; 
-                            press_map[1] = 1;
-                            press_map[2] = 1;
-                        }
-                        press_map[0] = int(total_parallel*0.7);
-                        press_map[1] = int(total_parallel*0.15);
-                        press_map[2] = int(total_parallel*0.05);
-                        only_flag=1;
-                    }
-                    if(!fff_flag){
-                        currentqps = int((s-oldqps)/5);
-                        fff_flag =1;
-                    }
-                    else{
-                        currentqps = int((s-oldqps)/during_time); 
-                    }
                     oldqps = s;
+                    currentqps = int((s-oldqps)/during_time);
                     gettimeofday(&oldtime, NULL);
-                    maxqps = maxqps > currentqps ? maxqps : currentqps;
-                    if(currentqps - _globalInfo->_rate < -20){
-                        if(maxqps > _globalInfo->_rate){
-                            continue;
+				    if(current_qps == 0){
+					    continue;
                     }
-                    if(press_map[timess]>1){
-                        for(int x=0;x<press_map[timess];x++){
-                            TurboSomeWorkers(total_thread_num,1);
-    
-                        }
-                        timess++;
-                    }
-                    else{
-                        int qps_perPar = current_qps/total_thread_num;
-                        if(qps_perPar == 0){
-                            continue;
-                        }
-                    int nnTinc = (_globalInfo->_rate- current_qps)/qps_perPar;
-                    TurboSomeWorkers(total_thread_num,nnTinc);
-                    }
+					if(current_qps-_globalInfo->_rate>50 || _globalInfo->_rate-current_qps>50){
+                        ModifyParallel(std::to_string(_globalInfo->_rate),total_thread_num);
+			        }
                 } 
             }
             message_val.clear();
@@ -242,7 +196,7 @@ void PiemonSchedule::run() {
                 Newlog2->WriteOneLog(val);
             }
         }
-    }
+    
     }
 }
 
@@ -254,12 +208,12 @@ void* PiemonSchedule::AccEngineRunner(void * args){
         float processTime = ld->_globalInfo->getProcessTime();
         int sucQ = atomic_read(&ld->_globalInfo->_successQuery);
         if(sucQ == 0){
-            std::cout<<"NO RETURN"<<std::endl;
+            std::cout<<"http return error"<<std::endl;
         }
-    else{
-        std::cout<<"RT: "<<(float)(processTime/sucQ/10.0)<<std::endl;
-    }
-    std::cout<<"PAR:"<<ld->DumpWorkerNum()<<std::endl;
+        else{
+            std::cout<<"current_rt : "<<(float)(processTime/sucQ/10.0)<<std::endl;
+        }
+    std::cout<<"current_parallel : "<<ld->DumpWorkerNum()<<std::endl;
     }
 }
 
@@ -284,7 +238,7 @@ void* PiemonSchedule::DumpQpsPerSec(void * args){
         current_qps = qps;
         current_parallel = paral;
 
-        printf("CURRENT-QPS:%d\n",qps);
+        printf("current_qps : %d\n",qps);
         gettimeofday(&tmptime, NULL);
         char val[50];
         memset(val,0,50*sizeof(char));
@@ -309,7 +263,7 @@ void PiemonSchedule::ModifyParallel(string message_val,int &total_thread_num){
     pthread_mutex_unlock(&output_mutex);
     if(TargetQps> cur_qps){    //turbo
         int NeedToBoost = int((TargetQps - cur_qps)/qps);
-        printf("BOOST:--%d---%d\n",NeedToBoost,current_qps);
+        printf("add parallel : %d current_qps : %d\n",NeedToBoost,current_qps);
         TurboSomeWorkers(total_thread_num,NeedToBoost);
         sleep(2);
         bool Level_boost = false;
@@ -336,7 +290,7 @@ void PiemonSchedule::ModifyParallel(string message_val,int &total_thread_num){
     }
     else{     //stop
         int NeedToDecline = int((cur_qps-TargetQps)/qps);
-        printf("DECLINE--%d\n",NeedToDecline);
+        printf("decline parallel : %d\n",NeedToDecline);
         for(int v =0;v<NeedToDecline;v++){StopSomeWorkers(1);total_thread_num--;}
         bool Level_dec = false;
         while(!Level_dec){

@@ -33,7 +33,13 @@ void* SyncPiemonRunner::AccEngineRunner(void * args){
         exit(-1);
     }
 	string wholeUrl = string(thisWorker->_globalInfo->_spec)+string(uri);
+	
+	struct timeval startTime;
+    gettimeofday(&startTime, NULL);
 	int retcode = queryF(wholeUrl.c_str());
+	struct timeval endTime;
+    gettimeofday(&endTime, NULL);
+	thisWorker->_globalInfo->addResponseTime(startTime,endTime);
 	if(retcode == 0){
         atomic_inc(&thisWorker->_globalInfo->_successQuery);
 		  }
