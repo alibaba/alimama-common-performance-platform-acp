@@ -22,8 +22,12 @@ alimama-common-performance platform(简称acp)是基于zookeeper的大规模分�
 
 ### 2.部署分布式agent及运维页面.
 [使用文档](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/Agent)  
+### 2.Deploy distributed agent and operation&maintenance web.
+[Documentation](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/Agent)  
 
 ### 3.c++高性能压测工具的依赖及编译
+[使用文档](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/HttpBench)  
+### 3.compilation of C + + high performance press tool
 [使用文档](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/HttpBench)  
 
 ### 4.数据持久化层和监控层部署
