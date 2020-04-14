@@ -14,21 +14,18 @@ alimama-common-performance platform(简称acp)是基于zookeeper的大规模分�
 
 * 一站式web平台,触发任务,查看指标,停止任务,任务列表.
 
-### 1.部署分布式调度服务和接口服务
+### 1.部署分布式调度服务和接口服务 && zookeeper's distributed scheduling service deployment
 [使用文档](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/Pressure)  
-### 1. zookeeper's distributed scheduling service deploy
 [Documentation](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/Pressure)  
 
 
-### 2.部署分布式agent及运维页面.
+### 2.部署分布式agent及运维页面 && Deploy distributed agent and operation&maintenance web
 [使用文档](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/Agent)  
-### 2.Deploy distributed agent and operation&maintenance web.
 [Documentation](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/Agent)  
 
-### 3.c++高性能压测工具的依赖及编译
+### 3.c++高性能压测工具的依赖及编译 && compilation of C + + high performance press tool
 [使用文档](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/HttpBench)  
-### 3.compilation of C + + high performance press tool
-[使用文档](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/HttpBench)  
+[Documentation](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/HttpBench)  
 
 ### 4.数据持久化层和监控层部署
 [使用文档](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/Monitor)  
