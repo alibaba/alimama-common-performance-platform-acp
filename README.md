@@ -1,6 +1,7 @@
 概述
 ===
 alimama-common-performance platform(简称acp)是基于zookeeper的大规模分布式的性能测试平台,服务于妈妈各个业务线性能测试,acp 1.0开源版本已经发布,主要特性如下:
+Alimama common performance platform (ACP) is a large-scale distributed performance test platform based on zookeeper, which serves for various business performance testing. ACP 1.0 open source version has been released, and its main features are as follows:
 ------
 * python实现,基于zookeeper的分布式智能调度服务/通用任务执行agent/http接口,可同时调度万级别agent执行任务,任务分配粒度细化到协议/压测数据类型级别,同时提供运维页面/部署脚本.
 * python, based on zookeeper's distributed intelligent scheduling service / common task execution agent / http interface, can schedule ten thousand levels of agent execution tasks at the same time, the task distribution granularity is refined to the level of protocol / test-data type, and provides operation and maintenance page / Deployment script
