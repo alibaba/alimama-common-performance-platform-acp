@@ -15,8 +15,8 @@ alimama-common-performance platform(简称acp)是基于zookeeper的大规模分�
 * 一站式web平台,触发任务,查看指标,停止任务,任务列表.
 
 ### 1.部署分布式调度服务和接口服务
-* zookeeper's distributed scheduling service deploy
 [使用文档](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/Pressure)  
+### 1. zookeeper's distributed scheduling service deploy
 [Documentation](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/Pressure)  
 
 
