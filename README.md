@@ -28,7 +28,7 @@ Alimama common performance platform (ACP) is a large-scale distributed performan
 [使用文档](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/HttpBench)  
 [Documentation](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/HttpBench)  
 
-### 4.数据持久化层和监控层部署
+### 4.数据持久化层和监控层部署 && Data persistence layer and monitoring layer deployment
 [使用文档](https://github.com/alibaba/alimama-common-performance-platform-acp/tree/master/Monitor)  
 
 ### 5.web部署 && web Deployment 
