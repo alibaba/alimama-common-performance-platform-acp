@@ -50,7 +50,7 @@ Alimama common performance platform (ACP) is a large-scale distributed performan
 联系我们
 ===
 * 欢迎通过邮件组 acp-opensource@list.alibaba-inc.com和github issue联系和反馈.
-
+* Welcome to contact and feedback with GitHub issue at acp-opensource@list.alibaba-inc.com
 
 FAQ
 ===
