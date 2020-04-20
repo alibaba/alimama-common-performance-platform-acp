@@ -39,6 +39,7 @@ Alimama common performance platform (ACP) is a large-scale distributed performan
 
 
 后续开源计划
+open-source Plan
 ===
 * acp除了提供了基础的性能测试组件外，还在智能化应用在性能测试领域做了很多探索,如acp架构图所示,acp做到了基于模型/算法的无人值守性能测试,引领业界方向,结合整体架构图后续开源计划如下:
 * 1:开源无人值守的模型训练流.
