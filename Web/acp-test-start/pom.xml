@@ -14,10 +14,10 @@
     <name>acp-opensource-start</name>
 
     <dependencies>
-        <dependency>
+<!--        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
-        </dependency>
+        </dependency> -->
         <dependency>
             <groupId>com.alibaba.acp</groupId>
             <artifactId>acp-test-service</artifactId>
