@@ -12,7 +12,5 @@
 mvn package
 ```
 
-在acp-test-start的target目录下生成war。将war重命名acp.war并部署到tomcat deploy即可。
-
-在acp-test根目录下，还提供了一个应用的快速启动脚本quickstart.sh。该脚本会下载tomcat、sar，打包应用并发布到tomcat，启动tomcat。在根目录执行下列命令即可。
+在acp-test-start的target目录下生成war。将war重命名acp.war并部署到tomcat 下deploy目录即可。
 
