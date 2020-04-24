@@ -2,8 +2,8 @@
 ## 目录结构
 解压后生成以下两个子目录
 
-* acp-test-service，代码在src/main/java中。
-* acp-test-start，包含web配置和示例代码。使用springmvc的代码在src/main/java目录下的com.alibaba.middleware包中，web配置和vm模板在src/main/webapp目录中。日志配置文件为src/main/webapp/WEB-INF下的logback.xml。
+* acp-test-service,为空白module;，
+* acp-test-start，包含web配置和示例代码，web配置和vm模板在src/main/webapp目录中。日志配置文件为src/main/webapp/WEB-INF下的logback.xml。
 
 ## 使用方式
 在根目录下执行
