@@ -7,6 +7,7 @@ Alimama common performance platform (ACP) is a large-scale distributed performan
 * python, based on zookeeper's distributed intelligent scheduling service / common task execution agent / http interface, can schedule ten thousand levels of agent execution tasks at the same time, the task distribution granularity is refined to the level of protocol / test-data type, and provides operation and maintenance page / Deployment script
 * c++版本的http高性能测试工具及sdk,将发压线程抽象成链式管理,同时提供指标实时统计,压测报告产出,控制qps,批量读取query,支持同步等压测模式.
 * C++  http high-performance testing tool and SDK, abstracts the pressure-generating threads into a chain management, while providing real-time statistics of indicators, perf report, qps controller, batch query reader, and support for pressure test modes such as synchronization.
+* golang实现的http压测工具,预计本月开源,敬请期待.
 * python实现数据持久化方案,支持mysql增删改查,负责压测任务及监控数据持久化.
 * python,Data persistence solution, supports mysql curl , this module is responsible for pressure testing tasks and monitoring data persistence
 
