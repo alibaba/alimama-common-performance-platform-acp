@@ -12,7 +12,9 @@
 
 ### 1. 进入zk目录，执行sudo bash ./zk_init.sh，完成zk部署工作,如有zk部署经验可跳过此步骤
 ### 2. 执行sudo bash ./start.sh，启动zk服务进程
-### 3. 执行sudo bash ./stop.sh，停止zk服务进程
+### 3. 执行sudo bash ./stop.sh，停止zk服务进程(如有需要)
+### 4. 执行python scripts/zk_init.py 构建acp的zookeeper监控path 
+### 5. 执行python scripts/resource_add.py 127.0.0.1(换成自己的ip),将下一步的压测agent注册到zk中.
 
 四、如何在本地搭建zk web页面，便于调试
 ===
