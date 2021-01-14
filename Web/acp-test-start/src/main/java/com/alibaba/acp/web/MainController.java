@@ -69,7 +69,7 @@ public class MainController {
     @RequestMapping(value="/api/getQueryList")
     @ResponseBody
     public String getQueryList(HttpServletRequest request) throws  IOException{
-        String res =  commonUtil.sendGet("http://10.103.67.40:8001/queryList");
+        String res =  commonUtil.sendGet("http://127.0.0.1:8001/queryList");
         JSONObject obj = JSONObject.parseObject(res);
         JSONArray retArr = new JSONArray();
         Integer seq = 1;
